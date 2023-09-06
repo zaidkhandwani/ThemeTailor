@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\CodeSculptor_UI.props" />
+</Project>

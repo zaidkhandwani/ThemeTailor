@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Theme Tailor</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/themeAssets/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/summernote/summernote-bs4.min.css">
+    <!-- DataTables -->
+    @* <link rel="stylesheet" href="~/themeAssets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/themeAssets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/themeAssets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">*@
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/themeAssets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/themeAssets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/themeAssets/dist/css/three-dots/three-dots.min.css">
+    <style>
+        .card-primary:not(.card-outline) > .card-header {
+            background: #343a40;
+        }
+
+        .btn-primary {
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+            .btn-primary:disabled {
+                background-color: #343a40;
+                border-color: #343a40;
+            }
+
+        /*.ui-autocomplete {
+                    position: absolute;
+                    cursor: pointer;
+                    background: white;
+                    z-index: 100030 !important;
+                }*/
+        .ui-autocomplete {
+            position: absolute;
+            cursor: pointer;
+            background: white;
+            z-index: 100030 !important;
+            list-style: none;
+            padding: 5px 0; /* Add padding at top and bottom of items */
+            border: 1px solid #343a40; /* Add border to create a partition between items */
+        }
+
+        .required-label::after {
+            content: "*";
+            color: red;
+            margin-left: 3px;
+        }
+
+        /* SKELETON */
+        .skeleton {
+            position: relative;
+        }
+
+            .skeleton::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10;
+                background: linear-gradient(90deg, #eee, #f9f9f9, #eee);
+                background-size: 200%;
+                animation: skeleton 1s infinite reverse;
+            }
+
+        @@keyframes skeleton {
+            0% {
+                background-position: -100% 0;
+            }
+
+            100% {
+                background-position: 100% 0;
+            }
+        }
+
+        .nav-sub-link {
+            margin-left: 10%;
+        }
+        /* SKELETON */
+
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        @*<div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="~/themeAssets/dist/img/logo.jpg" alt="KEC Logo" height="60" width="60">
+        <i class="nav-icon fas fa-spinner fa-spin mb-4"></i>
+        <img src="~/themeAssets/dist/img/logo.jpg" alt="KEC Logo" height="60" width="60">
+        </div>*@
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light skeleton">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+
+            </ul>
+
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4 skeleton">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
+                <img src="https://infohybrid.com/assets/images/favicon.png" alt="KEC Logo" class="brand-image" style="opacity: .8; margin-left:0.1rem !important;">
+                <span class="brand-text font-weight-light"><span style="font-weight:bold">Theme</span> Tailor</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar skeleton">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="~/themeAssets/dist/img/user2-160x160.jpg" id="imgUser" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a style="text-decoration: none;" href="#" class="d-block" id="lblUsername">Zaid Khandwani</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="collapse" data-target="#dashboardSubMenu">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Home Page
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul id="dashboardSubMenu" class="nav nav-treeview collapse">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <div class=" nav-sub-link">
+                                            <i class="fas fa-table nav-icon"></i>
+                                            <p>Navbar</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <div class=" nav-sub-link">
+                                            <i class="fas fa-plus-square nav-icon"></i>
+                                            <p>Search Form</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper skeleton">
+            @RenderBody()
+
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer skeleton">
+            <strong>Copyright &copy; @DateTime.Now.Year<a href="#">KEC International Limited</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.2.0
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark skeleton">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="~/themeAssets/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/themeAssets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="~/themeAssets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/themeAssets/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/themeAssets/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="~/themeAssets/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/themeAssets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/themeAssets/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/themeAssets/plugins/moment/moment.min.js"></script>
+    <script src="~/themeAssets/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/themeAssets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/themeAssets/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/themeAssets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/themeAssets/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/themeAssets/dist/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/themeAssets/dist/js/pages/dashboard.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="~/themeAssets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/themeAssets/plugins/jszip/jszip.min.js"></script>
+    <script src="~/themeAssets/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/themeAssets/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/themeAssets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/themeAssets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script>
+        const DATE_DISPLAY_FORMAT = 'DD-MMM-YYYY';
+        const DATETIME_DISPLAY_FORMAT = 'DD-MMM-YYYY hh:mm A';
+        const FORMAT_DATE = d => moment(d).format(DATE_DISPLAY_FORMAT);
+        const FORMAT_DATETIME = d => moment(d).format(DATETIME_DISPLAY_FORMAT);
+       
+
+
+        function ToggleLoader(show = true) {
+            window.setTimeout(() => {
+                $('#loader')[show ? 'show' : 'hide']();
+            }, 500)
+        }
+
+        const allSkeleton = document.querySelectorAll('.skeleton')
+
+        window.addEventListener('load', function () {
+            allSkeleton.forEach(item => {
+                item.classList.remove('skeleton')
+            })
+        })
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false);
+</body>
+</html>

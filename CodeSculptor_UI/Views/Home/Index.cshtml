@@ -1,0 +1,467 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Styles{
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/summernote/summernote-bs4.min.css">
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="~/themeAssets/plugins/codemirror/codemirror.css">
+    <link rel="stylesheet" href="~/themeAssets/plugins/codemirror/theme/monokai.css">
+    <style>
+        .card-body, .tab-content, .tab-pane, .tab-pane > *:not(.row) {
+            min-height: calc(100vh - 10em);
+        }
+
+        .tab-content, .tab-pane {
+            height: 100% !important;
+        }
+    </style>
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0 d-flex justify-content-between align-items-center">
+                        <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="custom-tabs-four-result-tab" data-toggle="pill" href="#WebView" role="tab" aria-controls="custom-tabs-four-result" aria-selected="true">Result</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-html-tab" data-toggle="pill" href="#HTML" role="tab" aria-controls="custom-tabs-four-html" aria-selected="false">HTML</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-style-tab" data-toggle="pill" href="#CSS" role="tab" aria-controls="custom-tabs-four-style" aria-selected="false">Style</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-translation-tab" data-toggle="pill" href="#Translation" role="tab" aria-controls="custom-tabs-four-translation" aria-selected="false">Translation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-model-tab" data-toggle="pill" href="#Model" role="tab" aria-controls="custom-tabs-four-model" aria-selected="false">Model</a>
+                            </li>
+                        </ul>
+                        <button class="btn btn-success btn-sm" onclick="SaveComponent()">Save Component</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="tab-content" id="custom-tabs-four-tabContent">
+                            <div class="tab-pane fade show active" id="WebView" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                                <iframe id="webView" class="w-100 h-100"></iframe>
+                            </div>
+                            <div class="tab-pane fade" id="HTML" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                                <textarea id="codeMirror_html" class="p-3"></textarea>
+                            </div>
+                            <div class="tab-pane fade" id="CSS" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered table-sm table-striped" id="externalLinkTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        External CSS Link
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input class="form-control" value='<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />' /></td>
+                                                    <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input class="form-control" value='<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">' /></td>
+                                                    <td><button class="btn btn-success btn-sm">Add</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <textarea id="codeMirror_css" class="p-3"></textarea>
+                            </div>
+                            <div class="tab-pane fade" id="Translation" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+                                <textarea id="codeMirror_translation" class="p-3"></textarea>
+                            </div>
+                            <div class="tab-pane fade" id="Model" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
+                                <textarea id="codeMirror_model" class="p-3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <!-- CodeMirror -->
+    <script src="~/themeAssets/plugins/codemirror/codemirror.js"></script>
+    <script src="~/themeAssets/plugins/codemirror/mode/css/css.js"></script>
+    <script src="~/themeAssets/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="~/themeAssets/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="~/themeassets/plugins/codemirror/mode/javascript/javascript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.9/beautify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.9/beautify-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.9/beautify-html.min.js"></script>
+    <script>
+        var cm_html_Initialized = false;
+        var cm_css_Initialized = false;
+        var cm_translation_Initialized = false;
+        var cm_model_Initialized = false;
+        var html = "";
+        var css = "";
+        var translation = "";
+        var model = "";
+        $(function () {
+            LoadSample();
+            DisplayWebView();
+        })
+        let CodeMirrorManager = {
+            instances: {},
+
+            initialize: function (elementId, options) {
+                this.destroy(elementId);  // Destroy existing instance, if any.
+                this.instances[elementId] = CodeMirror.fromTextArea(document.getElementById(elementId), options);
+            },
+
+            getInstance: function (elementId) {
+                return this.instances[elementId];
+            },
+
+            destroy: function (elementId) {
+                const instance = this.instances[elementId];
+                if (instance) {
+                    instance.getWrapperElement().remove();
+                    delete this.instances[elementId];
+                }
+            }
+        };
+        function LoadSample() {
+            css = `.flight-engine {
+                                                                            position: absolute;
+                                                                            left: 0px;
+                                                                            right: 0px;
+                                                                            // bottom: 50px;
+                                                                            padding: 20px;
+                                                                            z-index: 999;
+                                                                        }
+
+                                                                        .tab1.active {
+                                                                            display: block
+                                                                        }
+
+                                                                        .tab1 {
+                                                                            display: none
+                                                                        }
+
+                                                                        .tabing {
+                                                                            float: left;
+                                                                            width: 100%;
+                                                                            background: rgba(0, 130, 185, .8);
+                                                                            padding: 0 10px 10px 10px;
+                                                                            color: #fff;
+                                                                        }
+
+                                                                        .tabing ul {
+                                                                            margin: 0px;
+                                                                            padding: 0px;
+                                                                            list-style: none;
+                                                                            width: 100%;
+                                                                            float: left;
+                                                                        }
+
+                                                                        .tabing ul li {
+                                                                            float: left;
+                                                                        }
+
+                                                                        .tabing ul li a {
+                                                                            display: block;
+                                                                            padding: 5px;
+                                                                            text-decoration: none;
+                                                                            color: #fff;
+                                                                            background: rgba(0, 130, 185, .9);
+                                                                            margin: 0 10px 0 0;
+                                                                            padding: 5px 10px 5px 10px;
+                                                                            border-radius: 0px 0px 5px 5px;
+                                                                            font-size: 16px;
+                                                                            text-align: left;
+                                                                        }
+
+                                                                        .tabing ul li a.active {
+                                                                            background: #ba0400
+                                                                        }
+
+                                                                        .flight-tab {
+                                                                            width: 100%;
+                                                                            float: left;
+                                                                            margin-top: 10px;
+                                                                            padding: 15px
+                                                                        }
+
+                                                                        .flight-tab .textboxstyle {
+                                                                            width: 100%;
+                                                                            float: left;
+                                                                            color: #191919;
+                                                                            padding: 8px 10px 8px 35px;
+                                                                            border: none;
+                                                                            border-radius: 3px;
+                                                                            background: #f5f5f5;
+                                                                            font-size: 14px;
+                                                                            line-height: 20px;
+                                                                        }
+
+                                                                        .persent-one {
+                                                                            width: 19%;
+                                                                            float: left;
+                                                                            margin-right: 1%;
+                                                                            position: relative;
+                                                                            margin-bottom: 10px;
+                                                                        }
+
+                                                                        .persent-one i {
+                                                                            position: absolute;
+                                                                            left: 10px;
+                                                                            top: 10px;
+                                                                            color: #191919;
+                                                                            font-size: 18px;
+                                                                        }
+
+                                                                        .persent-one.less-per {
+                                                                            width: 16%;
+                                                                            float: left;
+                                                                            margin-right: 1%;
+                                                                        }
+
+                                                                        .persent-one.less-btn {
+                                                                            width: 5%;
+                                                                            float: left;
+                                                                            margin-right: 1%;
+                                                                        }
+
+                                                                        .persent-one.less-btn .cst-btn {
+                                                                            width: 85px;
+                                                                            height: 85px;
+                                                                            border-radius: 100%;
+                                                                            position: absolute;
+                                                                            top: -32px;
+                                                                        }`
+            html = `<div class="flight-engine">
+                                                                            <div class="container">
+                                                                                <div class="tabing">
+                                                                                    <ul>
+                                                                                        <li><a class="active" href="#1"><i class="fa fa-plane" aria-hidden="true"></i> Flight</a>
+                                                                                        </li>
+                                                                                        <li><a href="#2"><i class="fa fa-plane" aria-hidden="true"></i> Flight</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                    <div class="tab-content">
+                                                                                        <div id="1" class="tab1 active">
+                                                                                            <div class="flight-tab row">
+                                                                                                <div class="persent-one">
+                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="dep"
+                                                                                                        placeholder="From City or airport">
+                                                                                                </div>
+                                                                                                <div class="persent-one">
+                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="arival"
+                                                                                                        placeholder="To City or airport">
+                                                                                                </div>
+                                                                                                <div class="persent-one less-per">
+                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="from-date1" placeholder="Depart">
+                                                                                                </div>
+                                                                                                <div class="persent-one less-per">
+                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="to-date" placeholder="Returrn">
+                                                                                                </div>
+                                                                                                <div class="persent-one">
+                                                                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                                                                    <div class="textboxstyle" id="passenger">01 Passenger</div>
+                                                                                                </div>
+                                                                                                <div class="persent-one less-btn">
+                                                                                                    <input type="Submit" name="submit" value="Search" class="btn btn-info cst-btn" id="srch">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- flight tab -->
+                                                                                        </div>
+                                                                                        <!-- tab 1 -->
+                                                                                        <div id="2" class="tab1">
+                                                                                            <div class="flight-tab row">
+                                                                                                <div class="persent-one">
+                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="dep"
+                                                                                                        placeholder="From City or airport">
+                                                                                                </div>
+                                                                                                <div class="persent-one">
+                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="arival"
+                                                                                                        placeholder="To City or airport">
+                                                                                                </div>
+                                                                                                <div class="persent-one less-per">
+                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="from-date1" placeholder="Depart">
+                                                                                                </div>
+                                                                                                <div class="persent-one less-per">
+                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                    <input type="text" name="dep" class="textboxstyle" id="to-date" placeholder="Returrn">
+                                                                                                </div>
+                                                                                                <div class="persent-one">
+                                                                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                                                                    <div class="textboxstyle" id="passenger">01 Passenger</div>
+                                                                                                </div>
+                                                                                                <div class="persent-one less-btn">
+                                                                                                    <input type="Submit" name="submit" value="Search" class="btn btn-info cst-btn" id="srch">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- flight tab -->
+                                                                                        </div>
+                                                                                        <!-- tab 1 -->
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- tab content -->
+                                                                            </div>
+                                                                            <!-- tabbing -->
+                                                                        </div>`
+            $("#codeMirror_html").val(html);
+            $("#codeMirror_css").val(css);
+            $("#codeMirror_translation").val(translation);
+            $("#codeMirror_model").val(model);
+        }
+        $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+            var activatedTabText = $(e.target).text();
+            var previousTabText = $(e.relatedTarget).text();
+            if (previousTabText == 'HTML') {
+                CodeMirrorManager.getInstance("codeMirror_html").save();
+                html = CodeMirrorManager.getInstance("codeMirror_html").getValue();
+            }
+            if (previousTabText == 'Style') {
+                CodeMirrorManager.getInstance("codeMirror_css").save();
+                css = CodeMirrorManager.getInstance("codeMirror_css").getValue();
+            }
+            if (previousTabText == 'Translation') {
+                CodeMirrorManager.getInstance("codeMirror_translation").save();
+                translation = CodeMirrorManager.getInstance("codeMirror_translation").getValue();
+            }
+
+            if (activatedTabText == 'Result') {
+                DisplayWebView();
+            }
+            if (activatedTabText == 'HTML') {
+                CodeMirrorManager.destroy("codeMirror_html");
+                BeautifyHTML();
+
+                CodeMirrorManager.initialize("codeMirror_html", {
+                    mode: "htmlmixed",
+                    theme: "monokai",
+                    lineNumbers: true
+                });
+            }
+            if (activatedTabText == 'Style') {
+                CodeMirrorManager.destroy("codeMirror_css");
+                BeautifyCSS();
+                CodeMirrorManager.initialize("codeMirror_css", {
+                    mode: "css",
+                    theme: "monokai",
+                    lineNumbers: true
+                });
+            }
+            if (activatedTabText == 'Translation' && !cm_translation_Initialized) {
+                CodeMirror.fromTextArea(document.getElementById("codeMirror_translation"), {
+                    mode: "css",
+                    theme: "monokai",
+                    lineNumbers: true,  // Optional: if you want line numbers
+                    gutters: ["CodeMirror-lint-markers"],  // Optional: if you're using the lint addon for JSON validation
+                    lint: true  // Optional: if you're using the lint addon for JSON validation
+                });
+                cm_translation_Initialized = true;
+            }
+            if (activatedTabText == 'Model' && !cm_model_Initialized) {
+                CodeMirror.fromTextArea(document.getElementById("codeMirror_model"), {
+                    mode: "application/json",
+                    theme: "monokai",
+                    readOnly: true,
+                    lineNumbers: true,  // Optional: if you want line numbers
+                    gutters: ["CodeMirror-lint-markers"],  // Optional: if you're using the lint addon for JSON validation
+                    lint: true  // Optional: if you're using the lint addon for JSON validation
+                });
+                cm_model_Initialized = true;
+            }
+
+            console.log('Switched from:', previousTabText, 'to:', activatedTabText);
+
+        });
+        function DisplayWebView() {
+            console.log(html)
+            const iframe = document.getElementById('webView');
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.body.innerHTML = '';
+            iframeDoc.body.innerHTML = html;
+            const style = iframeDoc.createElement('style');
+            style.textContent = css;
+            iframeDoc.head.appendChild(style);
+            iframeDoc.head.innerHTML += `<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />`
+            iframeDoc.head.innerHTML += `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">`
+            //iframeDoc.head.innerHTML += `<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"/>`
+            //iframeDoc.head.innerHTML += `<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"/>`
+        }
+
+        function BeautifyHTML() {
+            const textarea = document.getElementById('codeMirror_html');
+            console.log(textarea.value);
+            const beautifiedHTML = html_beautify(textarea.value, {
+                indent_size: 4,
+
+            });
+            console.log(beautifiedHTML);
+            $("#codeMirror_html").val(beautifiedHTML);
+        }
+
+        function BeautifyCSS() {
+            const textarea = document.getElementById('codeMirror_css');
+            console.log(textarea.value);
+            const beautifiedCSS = css_beautify(textarea.value, {
+                indent_size: 4
+            });
+            console.log(beautifiedCSS);
+            $("#codeMirror_css").val(beautifiedCSS);
+        }
+
+        function SaveComponent() {
+            var data = {
+                HTML: minifyHTML(html),
+                CSS: minifyCSS(css),
+                ExternalCSSLinks: ['<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />', 
+                    '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">']
+            }
+            $.ajax({
+                url:'@Url.Action("SaveComponent","Data")',
+                type:'POST',
+                data:JSON.stringify(data),
+                contentType:'application/json',
+                success:function(resp){
+                    alert('Component Saved!');
+                },
+                error:function(err){
+                    alert('Failed to save component!');
+                }
+            })
+        }
+        function minifyHTML(input) {
+            return input.replace(/<!--[\s\S]*?-->/g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/>\s</g, '><')
+                .trim();
+        }
+
+        function minifyCSS(input) {
+            return input.replace(/\/\*[\s\S]*?\*\//g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/;\s/g, ';')
+                .replace(/\s{/g, '{')
+                .replace(/}\s/g, '}')
+                .replace(/:\s/g, ':')
+                .trim();
+        }
+    </script>
+}
