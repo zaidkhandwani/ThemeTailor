@@ -39,6 +39,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="custom-tabs-four-model-tab" data-toggle="pill" href="#Model" role="tab" aria-controls="custom-tabs-four-model" aria-selected="false">Model</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-theme-tab" data-toggle="pill" href="#Theme" role="tab" aria-controls="custom-tabs-four-model" aria-selected="false">Theme (Temporary)</a>
+                            </li>
                         </ul>
                         <button class="btn btn-success btn-sm" onclick="SaveComponent()">Save Component</button>
                     </div>
@@ -84,6 +87,29 @@
                             </div>
                             <div class="tab-pane fade" id="Model" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
                                 <textarea id="codeMirror_model" class="p-3"></textarea>
+                            </div>
+                            <div class="tab-pane fade" id="Theme" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="sel1">Select Theme:</label>
+                                                <select class="form-control" id="drpTheme">
+                                                    <option value="1">Retina</option>
+                                                    <option value="2">Blaze</option>
+                                                    <option value="3">Empire</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <button class="btn btn-success" onclick="SetTheme()">Set Theme</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -138,196 +164,197 @@
         };
         function LoadSample() {
             css = `.flight-engine {
-                                                                            position: absolute;
-                                                                            left: 0px;
-                                                                            right: 0px;
-                                                                            // bottom: 50px;
-                                                                            padding: 20px;
-                                                                            z-index: 999;
-                                                                        }
+                                                                                            position: absolute;
+                                                                                            left: 0px;
+                                                                                            right: 0px;
+                                                                                            // bottom: 50px;
+                                                                                            padding: 20px;
+                                                                                            z-index: 999;
+                                                                                        }
 
-                                                                        .tab1.active {
-                                                                            display: block
-                                                                        }
+                                                                                        .tab1.active {
+                                                                                            display: block
+                                                                                        }
 
-                                                                        .tab1 {
-                                                                            display: none
-                                                                        }
+                                                                                        .tab1 {
+                                                                                            display: none
+                                                                                        }
 
-                                                                        .tabing {
-                                                                            float: left;
-                                                                            width: 100%;
-                                                                            background: rgba(0, 130, 185, .8);
-                                                                            padding: 0 10px 10px 10px;
-                                                                            color: #fff;
-                                                                        }
+                                                                                        .tabing {
+                                                                                            float: left;
+                                                                                            width: 100%;
+                                                                                            background: rgba(0, 130, 185, .8);
+                                                                                            padding: 0 10px 10px 10px;
+                                                                                            color: #fff;
+                                                                                        }
 
-                                                                        .tabing ul {
-                                                                            margin: 0px;
-                                                                            padding: 0px;
-                                                                            list-style: none;
-                                                                            width: 100%;
-                                                                            float: left;
-                                                                        }
+                                                                                        .tabing ul {
+                                                                                            margin: 0px;
+                                                                                            padding: 0px;
+                                                                                            list-style: none;
+                                                                                            width: 100%;
+                                                                                            float: left;
+                                                                                        }
 
-                                                                        .tabing ul li {
-                                                                            float: left;
-                                                                        }
+                                                                                        .tabing ul li {
+                                                                                            float: left;
+                                                                                        }
 
-                                                                        .tabing ul li a {
-                                                                            display: block;
-                                                                            padding: 5px;
-                                                                            text-decoration: none;
-                                                                            color: #fff;
-                                                                            background: rgba(0, 130, 185, .9);
-                                                                            margin: 0 10px 0 0;
-                                                                            padding: 5px 10px 5px 10px;
-                                                                            border-radius: 0px 0px 5px 5px;
-                                                                            font-size: 16px;
-                                                                            text-align: left;
-                                                                        }
+                                                                                        .tabing ul li a {
+                                                                                            display: block;
+                                                                                            padding: 5px;
+                                                                                            text-decoration: none;
+                                                                                            color: #fff;
+                                                                                            background: rgba(0, 130, 185, .9);
+                                                                                            margin: 0 10px 0 0;
+                                                                                            padding: 5px 10px 5px 10px;
+                                                                                            border-radius: 0px 0px 5px 5px;
+                                                                                            font-size: 16px;
+                                                                                            text-align: left;
+                                                                                        }
 
-                                                                        .tabing ul li a.active {
-                                                                            background: #ba0400
-                                                                        }
+                                                                                        .tabing ul li a.active {
+                                                                                            background: #ba0400
+                                                                                        }
 
-                                                                        .flight-tab {
-                                                                            width: 100%;
-                                                                            float: left;
-                                                                            margin-top: 10px;
-                                                                            padding: 15px
-                                                                        }
+                                                                                        .flight-tab {
+                                                                                            width: 100%;
+                                                                                            float: left;
+                                                                                            margin-top: 10px;
+                                                                                            padding: 15px
+                                                                                        }
 
-                                                                        .flight-tab .textboxstyle {
-                                                                            width: 100%;
-                                                                            float: left;
-                                                                            color: #191919;
-                                                                            padding: 8px 10px 8px 35px;
-                                                                            border: none;
-                                                                            border-radius: 3px;
-                                                                            background: #f5f5f5;
-                                                                            font-size: 14px;
-                                                                            line-height: 20px;
-                                                                        }
+                                                                                        .flight-tab .textboxstyle {
+                                                                                            width: 100%;
+                                                                                            float: left;
+                                                                                            color: #191919;
+                                                                                            padding: 8px 10px 8px 35px;
+                                                                                            border: none;
+                                                                                            border-radius: 3px;
+                                                                                            background: #f5f5f5;
+                                                                                            font-size: 14px;
+                                                                                            line-height: 20px;
+                                                                                        }
 
-                                                                        .persent-one {
-                                                                            width: 19%;
-                                                                            float: left;
-                                                                            margin-right: 1%;
-                                                                            position: relative;
-                                                                            margin-bottom: 10px;
-                                                                        }
+                                                                                        .persent-one {
+                                                                                            width: 19%;
+                                                                                            float: left;
+                                                                                            margin-right: 1%;
+                                                                                            position: relative;
+                                                                                            margin-bottom: 10px;
+                                                                                        }
 
-                                                                        .persent-one i {
-                                                                            position: absolute;
-                                                                            left: 10px;
-                                                                            top: 10px;
-                                                                            color: #191919;
-                                                                            font-size: 18px;
-                                                                        }
+                                                                                        .persent-one i {
+                                                                                            position: absolute;
+                                                                                            left: 10px;
+                                                                                            top: 10px;
+                                                                                            color: #191919;
+                                                                                            font-size: 18px;
+                                                                                        }
 
-                                                                        .persent-one.less-per {
-                                                                            width: 16%;
-                                                                            float: left;
-                                                                            margin-right: 1%;
-                                                                        }
+                                                                                        .persent-one.less-per {
+                                                                                            width: 16%;
+                                                                                            float: left;
+                                                                                            margin-right: 1%;
+                                                                                        }
 
-                                                                        .persent-one.less-btn {
-                                                                            width: 5%;
-                                                                            float: left;
-                                                                            margin-right: 1%;
-                                                                        }
+                                                                                        .persent-one.less-btn {
+                                                                                            width: 5%;
+                                                                                            float: left;
+                                                                                            margin-right: 1%;
+                                                                                        }
 
-                                                                        .persent-one.less-btn .cst-btn {
-                                                                            width: 85px;
-                                                                            height: 85px;
-                                                                            border-radius: 100%;
-                                                                            position: absolute;
-                                                                            top: -32px;
-                                                                        }`
+                                                                                        .persent-one.less-btn .cst-btn {
+                                                                                            width: 85px;
+                                                                                            height: 85px;
+                                                                                            border-radius: 100%;
+                                                                                            position: absolute;
+                                                                                            top: -32px;
+                                                                                        }`
             html = `<div class="flight-engine">
-                                                                            <div class="container">
-                                                                                <div class="tabing">
-                                                                                    <ul>
-                                                                                        <li><a class="active" href="#1"><i class="fa fa-plane" aria-hidden="true"></i> Flight</a>
-                                                                                        </li>
-                                                                                        <li><a href="#2"><i class="fa fa-plane" aria-hidden="true"></i> Flight</a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                    <div class="tab-content">
-                                                                                        <div id="1" class="tab1 active">
-                                                                                            <div class="flight-tab row">
-                                                                                                <div class="persent-one">
-                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="dep"
-                                                                                                        placeholder="From City or airport">
+                                                                                            <div class="container">
+                                                                                                <div class="tabing">
+                                                                                                    <ul>
+                                                                                                        <li><a class="active" href="#1"><i class="fa fa-plane" aria-hidden="true"></i> Flight</a>
+                                                                                                        </li>
+                                                                                                        <li><a href="#2"><i class="fa fa-plane" aria-hidden="true"></i> Flight</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                    <div class="tab-content">
+                                                                                                        <div id="1" class="tab1 active">
+                                                                                                            <div class="flight-tab row">
+                                                                                                                <div class="persent-one">
+                                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="dep"
+                                                                                                                        placeholder="From City or airport">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one">
+                                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="arival"
+                                                                                                                        placeholder="To City or airport">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one less-per">
+                                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="from-date1" placeholder="Depart">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one less-per">
+                                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="to-date" placeholder="Returrn">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one">
+                                                                                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                                                                                    <div class="textboxstyle" id="passenger">01 Passenger</div>
+                                                                                                                </div>
+                                                                                                                <div class="persent-one less-btn">
+                                                                                                                    <input type="Submit" name="submit" value="Search" class="btn btn-info cst-btn" id="srch">
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <!-- flight tab -->
+                                                                                                        </div>
+                                                                                                        <!-- tab 1 -->
+                                                                                                        <div id="2" class="tab1">
+                                                                                                            <div class="flight-tab row">
+                                                                                                                <div class="persent-one">
+                                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="dep"
+                                                                                                                        placeholder="From City or airport">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one">
+                                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="arival"
+                                                                                                                        placeholder="To City or airport">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one less-per">
+                                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="from-date1" placeholder="Depart">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one less-per">
+                                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                                                                    <input type="text" name="dep" class="textboxstyle" id="to-date" placeholder="Returrn">
+                                                                                                                </div>
+                                                                                                                <div class="persent-one">
+                                                                                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                                                                                    <div class="textboxstyle" id="passenger">01 Passenger</div>
+                                                                                                                </div>
+                                                                                                                <div class="persent-one less-btn">
+                                                                                                                    <input type="Submit" name="submit" value="Search" class="btn btn-info cst-btn" id="srch">
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <!-- flight tab -->
+                                                                                                        </div>
+                                                                                                        <!-- tab 1 -->
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                                <div class="persent-one">
-                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="arival"
-                                                                                                        placeholder="To City or airport">
-                                                                                                </div>
-                                                                                                <div class="persent-one less-per">
-                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="from-date1" placeholder="Depart">
-                                                                                                </div>
-                                                                                                <div class="persent-one less-per">
-                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="to-date" placeholder="Returrn">
-                                                                                                </div>
-                                                                                                <div class="persent-one">
-                                                                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                                                                    <div class="textboxstyle" id="passenger">01 Passenger</div>
-                                                                                                </div>
-                                                                                                <div class="persent-one less-btn">
-                                                                                                    <input type="Submit" name="submit" value="Search" class="btn btn-info cst-btn" id="srch">
-                                                                                                </div>
+                                                                                                <!-- tab content -->
                                                                                             </div>
-                                                                                            <!-- flight tab -->
-                                                                                        </div>
-                                                                                        <!-- tab 1 -->
-                                                                                        <div id="2" class="tab1">
-                                                                                            <div class="flight-tab row">
-                                                                                                <div class="persent-one">
-                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="dep"
-                                                                                                        placeholder="From City or airport">
-                                                                                                </div>
-                                                                                                <div class="persent-one">
-                                                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="arival"
-                                                                                                        placeholder="To City or airport">
-                                                                                                </div>
-                                                                                                <div class="persent-one less-per">
-                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="from-date1" placeholder="Depart">
-                                                                                                </div>
-                                                                                                <div class="persent-one less-per">
-                                                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                                                                    <input type="text" name="dep" class="textboxstyle" id="to-date" placeholder="Returrn">
-                                                                                                </div>
-                                                                                                <div class="persent-one">
-                                                                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                                                                    <div class="textboxstyle" id="passenger">01 Passenger</div>
-                                                                                                </div>
-                                                                                                <div class="persent-one less-btn">
-                                                                                                    <input type="Submit" name="submit" value="Search" class="btn btn-info cst-btn" id="srch">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <!-- flight tab -->
-                                                                                        </div>
-                                                                                        <!-- tab 1 -->
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- tab content -->
-                                                                            </div>
-                                                                            <!-- tabbing -->
-                                                                        </div>`
+                                                                                            <!-- tabbing -->
+                                                                                        </div>`
             $("#codeMirror_html").val(html);
             $("#codeMirror_css").val(css);
             $("#codeMirror_translation").val(translation);
             $("#codeMirror_model").val(model);
         }
+
         $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
             var activatedTabText = $(e.target).text();
             var previousTabText = $(e.relatedTarget).text();
@@ -391,6 +418,7 @@
             console.log('Switched from:', previousTabText, 'to:', activatedTabText);
 
         });
+
         function DisplayWebView() {
             console.log(html)
             const iframe = document.getElementById('webView');
@@ -431,22 +459,23 @@
             var data = {
                 HTML: minifyHTML(html),
                 CSS: minifyCSS(css),
-                ExternalCSSLinks: ['<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />', 
+                ExternalCSSLinks: ['<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />',
                     '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">']
             }
             $.ajax({
-                url:'@Url.Action("SaveComponent","Data")',
-                type:'POST',
-                data:JSON.stringify(data),
-                contentType:'application/json',
-                success:function(resp){
+                url: '@Url.Action("SaveComponent","Data")',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (resp) {
                     alert('Component Saved!');
                 },
-                error:function(err){
+                error: function (err) {
                     alert('Failed to save component!');
                 }
             })
         }
+
         function minifyHTML(input) {
             return input.replace(/<!--[\s\S]*?-->/g, '')
                 .replace(/\s+/g, ' ')
@@ -462,6 +491,20 @@
                 .replace(/}\s/g, '}')
                 .replace(/:\s/g, ':')
                 .trim();
+        }
+
+        function SetTheme() {
+            $.ajax({
+                url: '@Url.Action("SaveTheme","Data")' + '?id=' + $("#drpTheme").val(),
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert('Theme Saved!')
+                },
+                error: function (err) {
+                    alert('Failed to save theme!')
+                }
+            })
         }
     </script>
 }

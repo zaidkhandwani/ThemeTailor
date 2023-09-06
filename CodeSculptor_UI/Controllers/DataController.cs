@@ -8,6 +8,7 @@ namespace CodeSculptor_UI.Controllers
     public class DataController : ControllerBase
     {
         public static Component cmp = new Component();
+        public static int Theme = 1;
 
         [HttpPost]
         public IActionResult SaveComponent(Component component)
@@ -17,9 +18,22 @@ namespace CodeSculptor_UI.Controllers
         }
 
         [HttpGet]
+        public IActionResult SaveTheme(string id)
+        {
+            Theme = int.Parse(id);
+            return Ok(true);
+        }
+
+        [HttpGet]
         public IActionResult GetComponent()
         {
             return Ok(cmp);
+        }
+
+        [HttpGet]
+        public IActionResult GetTheme()
+        {
+            return Ok(Theme);
         }
     }
 
